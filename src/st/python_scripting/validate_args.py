@@ -21,13 +21,14 @@ def validate_args(args):
     assert args.input_tensors.is_file(), f"No .npz array at location {args.input_tensors} not found!"
 
     args.cube_programmer = Path(args.cube_programmer).resolve()
-    assert args.cube_programmer.is_file(), f"STM 32 Cube Cube Programmer executable {args.cube_programmer} not found!."
+    assert args.cube_programmer.is_file(), f"STM32 Cube Programmer executable {args.cube_programmer} not found!."
 
     args.cube_mx = Path(args.cube_mx).resolve()
-    assert args.cube_mx.is_file(), f"STM 32 Cube Cube Programmer executable {args.cube_mx} not found!."
+    assert args.cube_mx.is_file(), f"STM32 CubeMX executable {args.cube_mx} not found!."
 
     args.stm32ai = Path(args.stm32ai).resolve()
-    assert args.stm32ai.is_file(), f"STM 32 Cube Cube Programmer executable {args.stm32ai} not found!."
+
+    assert args.stm32ai.is_file(), f"stm32ai executable {args.stm32ai} not found!. Install Cube.AI from within CubeMX: Software Packs -> Manage Software Packs -> STMicroelectronics."
 
     args.cube_template = Path(args.cube_template).resolve()
     assert args.cube_template.is_dir(), f"STM Cube IDE template project {args.cube_template} not found!."

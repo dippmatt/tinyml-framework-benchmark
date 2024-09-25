@@ -5,7 +5,6 @@ import subprocess
 import sys
 shared_scripts_path = (Path(__file__) / ".." / "..").resolve() 
 sys.path.append(str(shared_scripts_path))
-print(sys.path)
 assert shared_scripts_path.exists(), f"Shared scripts path {shared_scripts_path} does not exist"
 from shared_scripts.color_print import print_in_color, Color
 
@@ -77,11 +76,6 @@ def create_run_commands(permutations: list):
                     # create out_dir if it does not exist
                     if not out_dir.exists():
                         out_dir.mkdir(parents=True, exist_ok=True)
-
-                    # if "tflite" in str(out_dir):
-                    #     print(type(out_dir))
-                    #     print(out_dir)
-                    #     import sys;sys.exit()
                     
                     # check if output is already present
                     contents = list(out_dir.glob('*'))
@@ -185,6 +179,9 @@ def create_permutations(config):
             
         # add repetitions
         permutation["-" + "repetitions"] = config["repetitions"]
+
+        # add cube programmer
+        permutation["-" + "cube_programmer"] = config["cube_programmer"]
     
         # add variable values to permutation
         if len(variables) == 0:
@@ -365,6 +362,9 @@ if __name__ == "__main__":
     commands, final_permutations = create_run_commands(permutations)
     command_run_dir = Path(root_dir, "src")
     log_dir = Path(root_dir, "logs")
+    if not log_dir.exists():
+        log_dir.mkdir(parents=True, exist_ok=True)
+    assert log_dir.exists(), f"Log directory {log_dir} does not exist"
 
     run_commands(commands, final_permutations, command_run_dir, log_dir)
 

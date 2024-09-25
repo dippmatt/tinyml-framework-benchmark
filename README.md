@@ -24,7 +24,44 @@ Contains third party repositories (e.g. tiny_engine repo, Glow), needed to compi
 
 ### How to run
 
+#### Software requirements:
+
+- **STM32CubeIDE V1.9.0** to get the correct arm-none-eabi-gcc compiler.
+Add the compiler directory to $PATH, e.g., `export PATH=$PATH:/opt/st/stm32cubeide_1.9.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.0.202111181127/tools/bin`
+
+- **STM32CubeMX V6.8.0**. Using newer STM32CubeMX versions breaks the automation flow and you will have to deal with pop-up windows from CubeMX.
+
+- The [GNU Arm Embedded Toolchain](https://developer.arm.com/downloads/-/gnu-rm)
+
+- Apt packages: 
+    - **tk**
+
+#### Run the benchmark automation scripts:
+
 - Connect the [NUCLEO-L4R5ZI](https://www.st.com/en/evaluation-tools/nucleo-l4r5zi.html) board via USB.
+
+- Make sure to have read & write permissions for the device.
+One option for that is to set a rule in `/etc/udev/rules.d/`:
+Be aware that this creates global read write permissions for that device.
+
+Find the vendor ID of the ST-Link device: `sudo lsusb` should result in the following output:
+```
+...
+Bus 001 Device 004: ID 0483:374b STMicroelectronics ST-LINK/V2.1
+...
+```
+
+Now create a udev rule for the ST-Link device: 
+
+```sh
+sudo vim /etc/udev/rules.d/50-stlink.rules
+```
+Add the following to the file and set idVendor and idProduct to your IDs:
+```
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", MODE="0666"
+SUBSYSTEM=="usb_device", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", MODE="0666"
+KERNEL=="ttyACM0", MODE="0666"
+```
 
 - gdown is required to download test data from Google drive: `pip3 install gdown`
 
@@ -55,6 +92,12 @@ pyhton3 -m pip install -r requirements.txt
     [STM32Cube.AI](https://stm32ai.st.com/stm32-cube-ai/) is also required. The Code templates in this repository work with X-CUBE-AI v8.1.
 
 - Download the test data and tinyengine repository using `make init`
+
+### Structure of results
+
+The logs (stdout, stderr) are save to [logs/](./logs).
+
+All benchmark results will be saved to [data_gen/](./data_gen).
 
 ### Adding models or frameworks
 The automation scripts generate permutations from a config file of available frameworks, framework options and models. The configuration file can be edited here: [config.json](src/benchmark_automation/config.json).
