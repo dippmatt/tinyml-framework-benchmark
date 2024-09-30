@@ -145,6 +145,14 @@ pyhton3 -m pip install -r requirements.txt
 
 - Download the test data and tinyengine repository using `make init`
 
+- **Run the benchmarks**
+
+```
+cd src/
+source benchmark_automation/venv/bin/activate
+python3 benchmark_automation/main.py
+```
+
 ### Structure of results
 
 The logs (stdout, stderr) are save to [logs/](./logs).
