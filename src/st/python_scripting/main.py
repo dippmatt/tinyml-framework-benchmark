@@ -3,7 +3,6 @@ import argparse
 from pathlib import Path
 
 shared_scripts_path = (Path(__file__) / ".." / ".." / "..").resolve() 
-print(shared_scripts_path)
 sys.path.append(str(shared_scripts_path))
 assert shared_scripts_path.exists(), f"Shared scripts path {shared_scripts_path} does not exist"
 

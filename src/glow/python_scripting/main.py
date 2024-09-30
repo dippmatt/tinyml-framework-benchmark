@@ -2,8 +2,9 @@ import sys
 import argparse
 from pathlib import Path
 
-# shared_scripts_path = Path.cwd() / Path('..', '..', 'shared_scripts').resolve()
-# sys.path.append(str(shared_scripts_path))
+shared_scripts_path = (Path(__file__) / ".." / ".." / "..").resolve() 
+sys.path.append(str(shared_scripts_path))
+assert shared_scripts_path.exists(), f"Shared scripts path {shared_scripts_path} does not exist"
 
 # class to manage pipelined benchmarking flow 
 # it executes each of the flollowing mehtods 

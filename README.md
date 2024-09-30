@@ -26,15 +26,36 @@ Contains third party repositories (e.g. tiny_engine repo, Glow), needed to compi
 
 #### Software requirements:
 
-- **STM32CubeIDE V1.9.0** to get the correct arm-none-eabi-gcc compiler.
-Add the compiler directory to $PATH, e.g., `export PATH=$PATH:/opt/st/stm32cubeide_1.9.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.0.202111181127/tools/bin`
+- **[NXP Glow Model Compiler](https://www.nxp.com/design/design-center/software/eiq-ml-development-environment/eiq-inference-with-glow-nn:eIQ-Glow)**. Use the default installation path at `/opt/nxp/Glow` or adapt the path for `glow_compiler` and `glow_profiler` in [config.json](./src/benchmark_automation/config.json) to your installation path.
+Note: NXPs glow installer is compiled using Ubuntu 20.04. A workaround for other OS versions is installing Glow in a docker container and exposing the binaries from the container to the host system. After installing Glow in a Ubuntu-20.04 container, run the following on the host machine to mount the glow compiler in the host system:
 
-- **STM32CubeMX V6.8.0**. Using newer STM32CubeMX versions breaks the automation flow and you will have to deal with pop-up windows from CubeMX.
+```bash
+sudo mkdir -p /opt/nxp/Glow/bin
+cd docker
+docker build -t glow-installer .
+docker run -it -v /opt/nxp/Glow/bin:/opt/nxp/Glow/bin glow-installer
+```
+
+Run the following in the contaier and accept the license:
+```
+./eIQ_Glow_Linux64.deb.bin
+```
+
+The Glow binaries are then mounted on the host machine at `/opt/nxp/Glow/bin/`.
+
+- **[STM32CubeIDE V1.9.0](https://www.st.com/en/development-tools/stm32cubeide.html)** to get the correct arm-none-eabi-gcc compiler.
+Add the compiler directory to $PATH globally, e.g. to `/etc/environment` 
+
+    The compiler is found for example at `/opt/st/stm32cubeide_1.9.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.0.202111181127/tools/bin`
+
+- **[STM32CubeMX V6.8.0](https://www.st.com/en/development-tools/stm32cubemx.html)**. Using newer STM32CubeMX versions breaks the automation flow and you will have to deal with pop-up windows from CubeMX.
 
 - The [GNU Arm Embedded Toolchain](https://developer.arm.com/downloads/-/gnu-rm)
 
 - Apt packages: 
-    - **tk**
+    - tk 
+    - gcc-arm-none-eabi
+
 
 #### Run the benchmark automation scripts:
 

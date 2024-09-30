@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-init: get_testdata
+init: get_glow get_testdata
 	git submodule update --init
 	cd third_party/tinyengine && git checkout db6dde7
 	cd ../../
@@ -9,6 +9,9 @@ init: get_testdata
 get_testdata:
 	gdown https://drive.google.com/uc?id=1F634GcS3E5R_AwRsRZGR5auEYMt7D4mO -O third_party/test_data.zip
 	unzip -o third_party/test_data.zip -d ./
+
+get_glow:
+	wget https://www.nxp.com/lgfiles/devsuites/MCU/eIQ_Glow_Linux64.deb.bin -O docker/eIQ_Glow_Linux64.deb.bin
 
 clean: check_clean
 	rm -rf logs/*
