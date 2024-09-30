@@ -1,5 +1,36 @@
 # tinyml-framework-benchmark
-Automatically compare machine learning inference on cortex M4 microcontroller on a per-layer basis
+Automatically compare machine learning inference on cortex M4 microcontroller on a per-layer basis. Currently includes the frameworks [Glow](https://www.nxp.com/design/design-center/software/eiq-ml-development-environment/eiq-inference-with-glow-nn:eIQ-Glow), [STM32Cube.AI](https://stm32ai.st.com/stm32-cube-ai/), [Tiny-Engine](https://github.com/mit-han-lab/tinyengine) & [TensorFlow Lite for Microcontrollers](https://github.com/tensorflow/tflite-micro).
+
+### Automatic Plot generation after benchmarking
+
+Goal of this repository is to first, run the benchmarks on supported microcontroller platforms (currently [STM32L4R5ZI](https://www.st.com/en/evaluation-tools/nucleo-l4r5zi.html)).
+The results are then visualized including the following plots:
+
+Total Inference time per model is converted into a LaTeX table for each tested framework configuration after running the benchmarks:
+
+<div style="text-align: center;">
+<img src=./docs/inference_time2.png width="600"/>
+</div>
+
+Compare two frameworks against each other, highlighting faster vs slower layer runtimes:
+
+
+<div style="text-align: center;">
+<img src=./docs/glow_vs_glow_quant.png width="600"/>
+</div>
+
+Display rescheduling of layers in the computational graph and speedup / slowdown per layer with "pseudo" Sankey diagrams:
+
+<div style="text-align: center;">
+<img src=./docs/tflite_vs_glow.png width="600"/>
+</div>
+
+Visualize RAM and Flash usage per model:
+
+<div style="text-align: center;">
+<img src=./docs/ram_flash.png width="600"/>
+</div>
+
 
 ### Structure
 
